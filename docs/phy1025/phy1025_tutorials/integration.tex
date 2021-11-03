@@ -1,0 +1,209 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+\title{Integration}
+\author{James Capers \thanks{jrc232@exeter.ac.uk}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+There are many ways to evaluate integrals.
+Some methods you may be familiar with are:
+\begin{enumerate}
+	\item{Integration by inspection.  \\ 
+	This sort of technique is normally used for very basic integrals like $\int x^2 dx$, $\int \sin x dx$ or $\int 1/x dx$.}
+	\item{Integration by substitution.  \\
+	This is when an integral that looks tricky can be brought to a form that we can integrate by inspection if we make an appropriate variable change.  Finding the correct variable change can be tricky as there is no general rule.}
+	\item{Integration by parts.  \\
+	When the integral can be written as a product of something that can be differentiated easily with something that can be easily integrated, integration by parts $\int u dv = uv - \int v du$ can be used to evaluate the integral. }
+\end{enumerate}
+In this tutorial we'll consider some examples of each.
+
+\section{Integration by Inspection}
+
+\subsection{Elementary Integrals}
+
+Some integrals we can just write down the answer to.
+These results can be derived from first principles, but often it's not worth doing this every time.
+Examples of integrals you should just be able to write down the answer to are:
+\begin{itemize}
+	\item{$\int x^n dx = \frac{ x^{n+1} }{n+1} + C$.}
+	\item{$\int \frac{1}{x} dx = \ln x + C$.}
+	\item{$\int \cos x dx = -\sin x + C$.}
+	\item{$\int \frac{1}{1+x^2} dx = \tan^{-1} x + C$.}
+\end{itemize}
+
+\subsection{Partial Fractions}
+
+Other integrals can be evaluated by inspection after we perform some manipulations, for example using partial fractions to split the integrand into bits.
+Let's do an example.
+
+\subsubsection*{Example 1}
+
+Consider the integral
+\begin{equation}
+	I = \int dx \frac{2x + 1}{x^2 - 8x + 15} .
+\end{equation}
+We'll start by factorising the denominator as $x^2 - 8x + 15 = (x-3)(x-5)$.
+Partial fractions can now be used to split up the integrand
+\begin{align*}
+	\frac{2x-1}{(x-3)(x-5)} &= \frac{A}{x-3} + \frac{B}{x-5} \\
+	2x-1 &= A (x-5) + B(x-3) \\
+	2x -1 &= (A+B) x - (5A + 3B) \\
+	\Rightarrow A+B = 2,& 5A + 3B = 1 \\
+	A &= -\frac{5}{2}, \\
+	B &= \frac{9}{2} .
+\end{align*}
+So, we can now write
+\begin{align*}
+	\int dx \frac{2x + 1}{x^2 - 8x + 15} &= \int dx \frac{-5}{2(x-3)} + \int dx \frac{9}{2(x-5)} \\
+	&= -\frac{5}{2} \ln (x-3) + \frac{9}{2} \ln (x-5) + C.
+\end{align*}
+
+\subsubsection*{Example 2}
+
+For another example, we'll evaluate 
+\begin{equation}
+	\int dx \frac{2x^2 + x + 1}{(x-1)(x^2 +1)} .
+\end{equation}
+As before, we begin by splitting the integrand into partial fractions
+\begin{align*}
+	2x^2 + x + 1 &= A(x-1) + B(x^2+1) \\
+	2x^2 + x + 1 &= B x^2 + A x + (B-A) \\
+	\Rightarrow B = 2, & A = 1 .
+\end{align*}
+Now, we can integrate these partial fractions by inspection, giving
+\begin{align*}
+	\int dx \frac{2x^2 + x + 1}{(x-1)(x^2 +1)} &= \int dx \frac{1}{x^2 + 1} + \int dx \frac{2}{x-1} \\
+	&= \tan^{-1} (x) + 2 \ln (x-1) + C.
+\end{align*}
+
+\section{Integration by Substitution}
+
+Sometimes changing the variable of integration via a suitable substitution can make the integral \emph{much} easier to evaluate.
+In this section, we'll go over a few examples of this.
+
+\subsubsection*{Example 3}
+
+\begin{equation}
+	\int dx e^{\cos x} \sin x dx.
+\end{equation}
+Let's try the substitution $u = \cos x$, so $du = -\sin x dx$
+\begin{align*}
+	\int dx e^{\cos x} \sin x dx &= \int e^u \sin x \frac{-1}{\sin x} du \\
+	&= -\int du e^u \\
+	&= -e^u + C \\
+	&= -e^{\cos x} + C.
+\end{align*}
+
+\subsubsection*{Example 4}
+
+As another example, let's consider
+\begin{equation}
+	\int dx \frac{5}{3x - 2}.
+\end{equation}
+We'll try the substitution $u = 3x -2$, $du = 3 dx$
+\begin{align*}
+	\int dx \frac{5}{3x - 2} &= \frac{5}{u} \frac{du}{3} \\
+	&= \frac{5}{3} \int \frac{du}{u} \\
+	&= \frac{5}{3} \ln u + C \\
+	&= \frac{5}{3} \ln (3x - 2) + C.
+\end{align*}
+
+\subsubsection*{Example 5}
+
+As a final example of integration by substitution we'll consider 
+\begin{equation}
+	\int \frac{dx}{1 + 2 \sin^2 x}.
+\end{equation}
+For this, we'll need the following trigonometric identities \footnote{These can be looked up, for example on wikipedia \url{https://en.wikipedia.org/wiki/List_of_trigonometric_identities}}
+\begin{itemize}
+	\item{$\sec^2 x = 1 + \tan^2 x$.}
+	\item{$\sin x = \frac{\tan x}{\sqrt{1 + \tan^2 x}}$.}
+	\item{$\frac{d}{dx} \tan x = \sec^2 x$.}
+\end{itemize}
+To evaluate the integral, we'll use the substitution $u = \tan x$ so $du = \sec^2 x dx = (1 + \tan^2 x) dx = (1 + u^2) dx$.
+We'll also re-write $\sin^2 x$ in terms of this substitution as
+\begin{equation*}
+	\sin x = \frac{\tan x}{\sqrt{1 + \tan^2 x}} = \frac{u}{\sqrt{1 + u^2}}.
+\end{equation*}
+Putting this together to make the substitution
+\begin{align*}
+	\int \frac{dx}{1 + 2 \sin^2 x} &= \int \frac{du}{1 + u^2} \frac{1}{1 + \frac{2u^2}{1+u^2}} \\
+	&= \int du \frac{1}{1 + 3 u^2} .
+\end{align*}
+If we make a final substitution $y = \sqrt{3} u$, $dy = \sqrt{3} du$, then
+\begin{align*}
+	\int \frac{dx}{1 + 2 \sin^2 x} &= \int du \frac{1}{1 + 3 u^2} \\
+	&= \frac{1}{\sqrt{3}} \int du \frac{1}{1 + y^2} \\
+	&= \frac{1}{\sqrt{3}} \tan^{-1} (y) + C.
+\end{align*}
+All that remains is to undo the substitutions to write the answer in terms of $x$
+\begin{equation*}
+	\int \frac{dx}{1 + 2 \sin^2 x} = \frac{1}{\sqrt{3}} \tan^{-1} (\sqrt{3} \tan x) + C.
+\end{equation*}
+
+\section{Integration by Parts}
+
+The expression we'll be using to integrate by parts is 
+\begin{equation*}
+	\int u dv = uv - \int v du .
+\end{equation*}
+
+\subsubsection*{Example 6}
+
+We'll begin with the definite integral 
+\begin{equation}
+	\int_0^1 x e^{ax} dx .
+\end{equation}
+We'll set $u = x$, $dv = e^{ax}$ so $du = 1$, $v = \frac{1}{a} e^{ax}$.
+Plugging this into the integration by parts expression 
+\begin{align*}
+	\int_0^1 x e^{ax} dx &= \left. \frac{x}{a} e^{ax} \right|_0^1 - \frac{1}{a} \int_0^1  e^{ax} dx \\
+	&= \frac{1}{a} e^a - \frac{1}{a^2} \left[ e^{ax} \right]_0^1 \\
+	&= \frac{1}{a} e^a - \frac{1}{a^2} \left[ e^{a} -1 \right] \\
+	&= \frac{e^a}{a} \left( 1 - \frac{1}{a} \right) + \frac{1}{a^2} .
+\end{align*}
+
+\subsubsection*{Example 7}
+
+Now, let's evaluate
+\begin{equation}
+	\int dx e^{-3x} \cos 2x .
+\end{equation}
+We set $u = e^{-3x}$ so $du = -3 e^{-3x}$ and $dv = \cos 2x$ so $v = \frac{1}{2} \sin 2x$.
+Plugging these into the expression for integration by parts
+\begin{equation*}
+	I = \frac{1}{2} e^{-3x} \sin 2x + \frac{3}{2} \int dx \sin 2x e^{-3x} .
+\end{equation*}
+We have to integrate this by parts again, using $u = e^{-3x}$ and $dv = \sin 2x$ so that $du = -3 e^{-3x}$ and $v = -\frac{1}{2} \cos 2x$.
+Plugging in again, we get
+\begin{align*}
+	I &= \frac{1}{2} e^{-3x} \sin 2x - \frac{3}{4} \cos 2x e^{-3x} - \frac{9}{4} \int dx \cos 2x e^{-3x} \\
+	&= \frac{1}{2} e^{-3x} \sin 2x - \frac{3}{4} \cos 2x e^{-3x} - \frac{9}{4} I \\
+	I + \frac{9}{4} I &= \frac{1}{2} e^{-3x} \left[ \sin 2x - \frac{3}{2} \cos 2x \right] \\
+	I &= \frac{2}{13} e^{-3x} \left[ \sin 2x - \frac{3}{2} \cos 2x \right]
+\end{align*}
+
+\subsubsection*{Example 8}
+
+Finally, we derive a recursion formula for 
+\begin{equation}
+	I_n = \int \sin^n (x) dx .
+\end{equation}
+We begin by re--writing the integrand as $\sin x \sin^{n-1} x$ and integrating by parts with $u = \sin^{n-1} x$ and $dv = \sin x$.
+This gives $v = -\cos x$ and $du = (n-1) \cos x \sin^{n-2} x$.
+Plugging these into the integration by parts expression
+\begin{align*}
+	I_n &= -\sin^{n-1} x \cos x + (n-1) \int dx \cos^2 x \sin^{n-2} x \\
+	&= -\sin^{n-1} x \cos x + (n-1) \int dx (1- \sin^2 x) x \sin^{n-2} x \\
+	&= -\sin^{n-1} x \cos x + (n-1) \int dx \sin^{n-2} x - (n-1) \int dx \sin^n x \\
+	I_n &= -\sin^{n-1} x \cos x + (n-1) I_{n-2} - (n-1) I_n \\
+	n I_n &= -\sin^{n-1} x \cos x + (n-1) I_{n-2} .
+\end{align*}
+
+\end{document}
