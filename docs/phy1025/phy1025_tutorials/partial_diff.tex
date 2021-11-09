@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{physics}
+
+\title{Partial Differentiation}
+\author{James Capers \thanks{jrc232@exeter.ac.uk}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Partial Differentiation}
+
+\begin{enumerate}
+	\item{Find $\dv{y}{x}$ if $y = \ln (\sin 2x)$.
+		\begin{align*}
+			\dv{y}{x} &= \frac{1}{\sin 2x} 2 \cos 2x = \frac{2}{\tan 2x}, \\
+			y &= \ln u, u = \sin v, v = 2x,\\
+			\dv{y}{x} &= \pdv{y}{u} \pdv{u}{v} \pdv{v}{x} .
+		\end{align*}			
+	}
+	\item{Find $\dv{z}{t}$ where $z = 2 t^2 \sin t$.
+		\begin{align*}
+			\dv{z}{t} &= (2t^2) \cos t + (4t) \sin t \\
+			&= 2t \left[ t \cos t + 2 \sin t \right]
+		\end{align*}
+	}
+	\item{Find all the partial derivatives of $z = x^2 \sin (2x + 3y)$.
+		\begin{align*}
+			\pdv{z}{x} &= (2) x^2 \cos (2x + 3y) + \sin (2x + 3y) (2x) \\
+			&= 2x^2 \cos (2x + 3y) + 2x \sin (2x + 3y). \\
+			\pdv{z}{y} &= (3) x^2 \sin (2x + 3y) .
+		\end{align*}			
+	}
+\end{enumerate}
+
+\section{Implicit Differentiation}
+
+\begin{enumerate}
+	\item{If $x + e^x = 1$, find $\dv{x}{t}$ and $\dv[2]{x}{t}$.
+		\begin{align*}
+			\dv{x}{t} + \pdv{x}{t} e^x &= 1 \\
+			\dv{x}{t} &= \frac{1}{1 + e^x} . \\
+			\dv[2]{x}{t} + e^x \dv[2]{x}{t} + e^x \left( \dv{x}{t} \right)^2  &= 0 \\
+			\dv[2]{x}{t} + e^x \dv[2]{x}{t} + e^x \left( \frac{1}{1 + e^x} \right)^2  &= 0\\
+			\dv[2]{x}{t} &= \frac{-e^x}{(1+e^x)^3} .
+		\end{align*}			
+	}
+	\item{Find $\dv{y}{x}$ of $xy + 2y - x = 4$.
+		\begin{align*}
+				y + x \dv{y}{x} + 2 \dv{y}{x} - 1 &= 0 \\
+				\dv{y}{x} \left( x + 2 \right) &= 1 - y \\
+				\dv{y}{x} &= \frac{1-y}{x+2}. 
+		\end{align*}			
+	}
+\end{enumerate}
+
+\section{Some Other Examples}
+
+\begin{enumerate}
+	\item{If $w = f(ax+by)$ show that 
+		\begin{equation*}
+			b \pdv{w}{x} - a \pdv{w}{y} = 0.
+		\end{equation*}		
+		\begin{align*}
+			\pdv{w}{x} &= \pdv{w}{f} \pdv{f}{x} \\
+			&= \pdv{w}{f} a \\
+			\pdv{w}{y} &= \pdv{w}{f} \pdv{f}{y} \\
+			&= \pdv{w}{f} b \\
+			\Rightarrow b \pdv{w}{x} - a \pdv{w}{y} &= a b \pdv{w}{f} - a b \pdv{w}{f} = 0.
+		\end{align*}			
+	}
+	\item{If $u = f(x-ct) + g(x - ct)$, show that 
+		\begin{equation*}
+			\pdv[2]{u}{x} = \frac{1}{c^2} \pdv[2]{u}{t} .
+		\end{equation*}
+		\begin{align*}
+			\pdv{u}{x} &= \pdv{u}{f} \pdv{f}{x} + \pdv{u}{g} \pdv{g}{x} \\
+			&= \pdv{u}{f} + \pdv{u}{g} \\
+			\pdv[2]{u}{x} &= \pdv[2]{u}{f} + \pdv[2]{u}{g} \\
+			\pdv{u}{t} &= \pdv{u}{f} \pdv{f}{t} + \pdv{u}{g} \pdv{g}{t} \\
+			&= \pdv{u}{f} (-c) + \pdv{u}{g} (c) \\
+			\pdv[2]{u}{t} &=\pdv{u}{f} (-c)^2 + \pdv{u}{g} (c)^2 \\
+			&= c^2 \left( \pdv{u}{f} + \pdv{u}{g}\right) \\
+			\Rightarrow \pdv[2]{u}{x} &= \frac{1}{c^2} \pdv[2]{u}{t}
+		\end{align*}
+	}
+	\item{If $z = \cos (xy)$, show that 
+		\begin{equation*}
+			x \pdv{z}{x} - y \pdv{z}{y} = 0 .
+		\end{equation*}
+		\begin{align*}
+			\pdv{z}{x} &= -y \sin (xy) \\
+			\pdv{z}{y} &= -x \sin (xy) \\
+			\Rightarrow x \pdv{z}{x} - y \pdv{z}{y} &= -xy \sin (xy) + xy \sin (xy) = 0 .
+		\end{align*}
+	}
+	\item{The base radius, $r$, of a cone is decreasing by 0.1 cm/s and the height $h$ is increasing by 0.2 cm/s.  Find how the volume $V = \frac{\pi}{3} r^2 h$ is changing when $r = 2$ cm and $h = 3$ cm.
+		\begin{align*}
+			\dv{V}{t} &= \pdv{V}{r} \pdv{r}{t} + \pdv{V}{h} \pdv{h}{t} \\
+			\pdv{V}{r} &= \frac{2}{3} \pi r h \\
+			\pdv{V}{h} &= \frac{\pi}{3} r^2 \\
+			\dv{V}{t} &= \left( \frac{2}{3} \pi r h \right) (-0.1) + \left( \frac{\pi}{3} r^2 \right) (0.2) \\
+			&= -0.42 {\rm cm}^3 {\rm s}^{-1} .
+		\end{align*}
+	}
+	\item{If $z = 2xy - 3x^2 y$ and $x$ is increasing by 2 cm/s, find how $y$ must change so that $z$ remains constant when $x = 3$ cm and $y = 1$ cm.
+		\begin{align*}
+			\dv{z}{t} &= \pdv{z}{x} \pdv{x}{t} + \pdv{z}{y} \pdv{y}{t} \\
+			\pdv{z}{x} &= 2y - 6 xy \\
+			\pdv{z}{y} &= 2x - 3x^2 \\
+			\dv{z}{t} &= (2y - 6 xy) \pdv{x}{t} + (2x - 3x^2) \pdv{y}{t} = 0 \\
+			&= -31 - 21 \pdv{y}{t} \\
+			\Rightarrow \pdv{y}{t} &= -\frac{32}{21} {\rm cm/s} .
+		\end{align*}			
+	}
+	\item{Prove that if $V = \ln (x^2 + y^2)$ then $\nabla^2 V = 0$.
+		\begin{align*}
+			\pdv{V}{x} &= \frac{2x}{x^2 + y^2} \\
+			\pdv{V}{y} &= \frac{2y}{x^2 + y^2} \\
+			\pdv[2]{V}{x} &= (2x)^2 (-1) (x^2 + y^2)^{-2} + 2(x^2 + y^2)^{-1} \\
+			&= \frac{2(x^2 + y^2) - 4x^2}{(x^2 + y^2)^2} . \\
+			\pdv[2]{V}{y} &= \frac{2(x^2 + y^2) - 4y^2}{(x^2 + y^2)^2} \\
+			&= \frac{2x^2 - 2y^2}{(x^2 + y^2)^2} . \\
+			\pdv[2]{V}{x} + \pdv[2]{V}{y} &= \frac{1}{(x^2 + y^2)^2} \left[ 2y^2 - 2x^2 + 2x^2 - 2y^2 \right] = 0.
+		\end{align*}			
+	}
+\end{enumerate}
+
+\end{document}
