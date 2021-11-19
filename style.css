@@ -31,9 +31,10 @@ html {
 
 body {
 	color: var(--fg);
-	font-family: 'Open Sans', sans-serif;
-	font-size: 12px;
-	line-height: 1.5em;
+	/* font-family: 'Open Sans', sans-serif; */
+	font-family: 'Gentium Book Basic', serif;
+	font-size: 12em;
+	line-height: 1.5;
 	padding: 1em;
 	margin: auto;
 	max-width: 52em;
