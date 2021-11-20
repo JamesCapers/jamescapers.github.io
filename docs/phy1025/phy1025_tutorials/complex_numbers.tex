@@ -1,0 +1,102 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{physics}
+
+\title{Complex Numbers}
+\author{James Capers \thanks{jrc232@exeter.ac.uk}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Most of the questions this week are taken from chapter 2 of ``Mathematical Methods in the Physical Sciences'' by M. L. Boas (John Wiley and Sons, 1980).
+The aim is to get students familiar with the basics of complex numbers and get used to manipulating them.
+\end{abstract}
+
+
+\begin{enumerate}
+	\item{Express in polar form $z=-1-i$ and $z = (1+i)^2$. \\
+		For a complex number $z = a + i b$, the magnitude is $r = \sqrt{a^2 + b^2}$ and the angle is $\theta = \arctan(y/x)$.
+		These follow the usual definitions of 2D polar coordinates.	\\
+		For $z=-1-i$, we have $r = \sqrt{1^2 + 1^2} = \sqrt{2}$ and $\theta = \arctan (1) = -3\pi/4$ so $z=-1-i = \sqrt{2}e^{-i3\pi/4}$.
+		Now for $z=(1+i)^2$, we could expand out the brackets to get something like $z=a+ib$ or we can deal with the complex number inside the root then apply the square root - let's do the latter. \\
+		If $z = 1+i$, $r = \sqrt{2}$ and $\theta = \pi/4$.  Squaring this result, we have $z=(1+i)^2 = 2e^{i\pi/2}$.
+	}
+	\item{Find \emph{all} of the solutions to $4x^4 - 5x^2 -6 = 0$ and plot them in the complex plane. \\
+		Let's say $y = x^2$.  Now, we have $4y^2 - 5y - 6 = 0$.  We can solve this with the quadratic formula 
+		\begin{align*}
+			y &= \frac{-b \pm \sqrt{b^2 - 4 ac}}{2a} \\
+			&= \frac{5 \pm \sqrt{25-4(4)(-6)}}{8} \\
+			&= \frac{5 \pm \sqrt{25+96}}{8} \\
+			&= \frac{5 \pm \sqrt{121}}{8} \\
+			&= \frac{5 \pm 11}{8}
+		\end{align*}			
+		Taking the positive sign, we have $y = 2$ so $x = \pm \sqrt{2}$. \\
+		Now, taking the minus sign, we have $y = -3/4$ so $x = \pm i \sqrt{3}{4}$. \\
+		This problem is from the homework of week 1, where you could have ignored the complex roots!
+	}
+	\item{Find the solution to $z^2 - 2z + 2 = 0$. \\
+		Plugging this into the quadratic formula, we get 
+		\begin{align*}
+			z &= \frac{2 \pm \sqrt{4 - 4(1)(2)}}{2} \\
+			&= 1 \pm \sqrt{-1} \\
+			&= 1 \pm i.
+		\end{align*}			
+	}
+	\item{Write $1+i\sqrt{3}$ in polar form.
+		\begin{equation*}
+			1 + i \sqrt{3} = 2\left( \cos \frac{\pi}{3} + i \sin \frac{\pi}{3} \right) = 2e^{i\pi/3}.
+		\end{equation*}	
+	}	
+	\item{Write 
+		\begin{equation*}
+			\frac{1}{2 (\cos 20^\circ + i \sin 20^\circ)}
+		\end{equation*}		
+		in the form $z = x+iy$. \footnote{Hint: $20^\circ = \pi/9$.}	
+		\begin{align*}
+			\frac{1}{2 (\cos 20^\circ + i \sin 20^\circ)} &= \frac{1}{2 (\cos \pi/9 + i \sin \pi/9)} \\
+			&= \frac{1}{e^{i\pi/9}} \\
+			&= 0.5 e^{-i\pi/9} \\
+			&= 0.5(\cos \pi/9 - i \sin \pi/9) \\
+			&= 0.47 - i 0.17 .
+		\end{align*}
+	}
+	\item{Find 
+		\begin{equation*}
+			\left| \frac{\sqrt{5} + 3i}{1-i} \right| .
+		\end{equation*}			
+		\begin{align*}
+			\left| \frac{\sqrt{5} + 3i}{1-i} \right| &= \frac{|\sqrt{5} + 3i|}{|1-i|} \\
+			&= \frac{\sqrt{14}}{\sqrt{2}} = \sqrt{7} .
+		\end{align*}
+	}
+	\item{Find all of the cube roots of 8, $\sqrt[3]{8}$. \\
+		In general a complex root can be written as $z^{1/3} = r^{1/3} e^{i\theta /3}$.  We can then notice that if we write $z=8$, in polar form we get $r=8$ and $\theta$ = $0, 2\pi, 4\pi, 6\pi \ldots$ . \\
+		Therefore, the cube root has $r=2$ and $\theta = 0, (2/3)\pi, (4/3)\pi$ which in degrees is $\theta = 0^\circ, 120^\circ, 240^\circ \ldots$. \\
+		Therefore the cube roots of 8 are
+		\begin{equation*}
+			\sqrt[3]{8} = 2, -1+i\sqrt{3}, -1-i\sqrt{3} .
+		\end{equation*}			
+	}
+	\item{Find and plot all of the values of $\sqrt[4]{-64}$. \\
+		In polar coordinates $-64$ is $r = 64$ and $\theta = \pi + 2k\pi$, where $k$ is an integer.  
+		Remembering that $z^{1/4} = r^{1/4} e^{i\theta/4}$ we write $\sqrt[4]{-64}$ in polar form, with $r = \sqrt[4]{64} = 2\sqrt{2}$ and $\theta = \pi/4, (\pi + 2\pi)/4, (\pi + 4\pi)/4$ and so on.  
+		Simplifying, we have $\theta = \pi/4, 3\pi/4, 5\pi/4, 7\pi/4$. \\
+		In rectangular form, these roots are $\pm 2 \pm 2i$.
+	}	
+	\item{Find and plot all of the roots of $\sqrt[6]{-8i}$. \\
+		Writing $-8i$ in polar form we have $r = 8$ and $\theta = 3\pi/2 + 2\pi k$.
+		The roots therefore have $r = \sqrt{2}$ and $\theta = \pi/4 + k \pi/3$.
+		This gives the roots as 
+		\begin{equation*}
+			\pm \left\{ 1+i, \frac{\sqrt{3} + 1}{2}, - \frac{\sqrt{3} - 1}{2}, \frac{\sqrt{3} - 1}{2}, - \frac{\sqrt{3} + 1}{2} \right\} .
+		\end{equation*}
+	}
+\end{enumerate}
+
+
+\end{document}
