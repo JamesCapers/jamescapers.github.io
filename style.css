@@ -202,7 +202,7 @@ td {
 
 @media only screen and (max-width: 768px) {
 	body {
-		font-size: 14px;
+		font-size: 16px;
 	}
 	.sitename {
 		display: none;
@@ -211,7 +211,7 @@ td {
 
 @media only screen and (min-width: 768px) {
 	body {
-		font-size: 16px;
+		font-size: 18px;
 	}
 	.logo {
 		max-height: 40px;
