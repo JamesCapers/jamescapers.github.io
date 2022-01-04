@@ -93,7 +93,7 @@ h3 {
 hr {
     display: block;
     height: 1px;
-    width: 55%;
+    width: 75%;
     border: 0;
     border-top: 2px solid rgb(0, 0, 0);
     margin: 1em 0;
@@ -404,6 +404,10 @@ label.margin-toggle:not(.sidenote-number) {
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+.MathJax {
+    font-size: 1.4rem !important;
 }
 
 @media (max-width: 760px) {

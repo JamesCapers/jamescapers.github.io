@@ -1,0 +1,89 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="../tufte.css">
+  <title>Jacobi-Anger</title>
+  <meta name="description" content="Jacobi-Anger">
+  <meta name="author" content="James Capers">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+</head>
+<body>
+<article>	
+
+	<a href="../index.html"> Back to homepage </a>
+	<h1> The Jacobi-Anger Expansion </h1>
+	<section>
+	<hr>
+	<p>
+		Abstract, words
+	</p>
+	<p>💻 <a href="../index.html">Get the code here</a></p>
+	<hr>
+
+	<h2>&#167 1 Motivation</h2>
+	<p>
+		Motivation: Two classes of solution to the 2D Helmholtz equation are plane waves and Bessel functions.  
+		Sometimes, we'd like to be able to convert between the two.
+		\begin{align}
+			\left( \nabla^2 + k^2 \right) \phi = 0 \\
+			\left( \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + k^2 \right) \phi = 0
+		\end{align}
+	</p>
+
+	<p>Plane wave sln \( \phi (x, y) = e^{ik_x x + ik_y y} \)</p>
+	<p>Then, in cylindrical coords...</p>
+	\begin{equation}
+		\left( \frac{\partial^2}{\partial r^2} + \frac{1}{r} \frac{\partial}{\partial r} + \frac{1}{r^2} \frac{\partial^2}{\partial \theta^2} + k^2 \right) \phi = 0
+	\end{equation}
+
+	<p>Variable separation \( \phi (r, \theta) = R(r) \Theta (\theta) \)</p>
+	\begin{equation}
+		x^2 \frac{d^2y}{dx^2} + x \frac{dy}{dx} + (x^2 - \alpha^2) y = 0
+	\end{equation}
+
+	<h2>&#167 2 Fourier Series</h2>
+	<p>
+		Fourier series let us decompose the plane waves. We then need to find the coefficients - these turn out to be Bessel fultions!
+	</p>
+	\begin{equation}
+		f(\theta) = \sum_{l=-\infty}^{\infty} a_n e^{in\theta}
+	\end{equation}
+	
+
+	<h2>&#167 3 The Jacobi-Anger Expansion</h2>
+	<p>
+		This is basically the Jacobi-Anger relation, but we be re-written as a sum from 0 to \(\infty\) .
+	</p>
+
+	<p>
+		Useful to note - under angular integration, most of this goes away!
+	</p>
+
+	<p>
+		Show a plot
+	</p>
+
+	<pre><code>import numpy as np</code></pre>
+
+	<h2>References/Further Reading</h2>
+
+	<ol>
+		<li>Thing 1</li>
+	</ol>
+
+	
+	</section>
+</article>
+<footer>
+	<br>
+	Copyright &#169 James Capers, 2020.  Made with <a href="https://github.com/edwardtufte/tufte-css">tufte.css</a>.
+</footer>
+
+</body>
+</html>
