@@ -1,0 +1,217 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="../tufte.css">
+  <title>Regularising Integrals</title>
+  <meta name="description" content="Regularising Integrals">
+  <meta name="author" content="James Capers">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+</head>
+<body>
+<article>	
+	<a href="../index.html"> Back to homepage </a>
+	<h1> Regularising Integrals and the Casimir Effect </h1>
+	<section>
+	<hr>
+	<p>
+		I outline and play around with a trick that often gets used to regularise oscillating and divergent integrals.
+		After a couple of simple examples, I apply this to the Casimir effect and show the the difference between an diverging series and a diverging integral is -1/12.
+		While counterintuitive, this difference is something that can actually be measured.
+	</p>
+	<hr>
+
+	<h2>Contents</h2>
+	<ol>
+		<li><a href="#oscillating">Oscillating Integrals</a></li>
+		<li><a href="#diverging">Diverging Integrals</a></li>
+		<li><a href="#casimir">The Casimir Effect</a></li>
+	</ol>
+
+	<h2 id="oscillating">&#167 1 Oscillating Integrals</h2>
+	<p>
+	Can then integral 
+	\begin{equation} 
+		I = \int_0^\infty \sin x dx 
+	\end{equation}
+	be evaluated?
+	Let's see what happens if we do a convergence test.  
+	We call the upper limit \(\alpha\) and do the integral
+	\begin{align} 
+		I &= \int_0^\alpha \sin x dx \\
+		&= -\left[ \cos x \right]_0^\alpha \\
+		&= -\cos \alpha + \cos 0 \\
+		&= 1 - \cos \alpha . 
+	\end{align}
+	Since \(\cos \alpha\) oscillates between -1 and 1 as we send \(\alpha \rightarrow \infty\) the integral can take values between 0 and 2.
+	This tells us that the integral does not converge to one value for these limits. <br>
+	However, there is a trick we can play that gets used fairly often in theoretical physics to evaluate these kinds of integrals.
+	We can re-write the original integral as the limit 
+	\begin{equation} 
+		I = \lim_{\eta \rightarrow 0} \int_0^\infty e^{-\eta x} \sin x dx ,
+	\end{equation}
+	where \(\eta > 0\).
+	We can see that for \(\eta = 0\) exponential terms becomes 1 and we have our original integral back.
+	The benefit of adding this extra part is that it means that the integeral converges since the decaying expoential forces the integrand to go to zero at infinity.
+	The integral can now be evaluated by writing \(\sin x \) in terms of complex exponentials  
+	\begin{align} 
+		I &= \lim_{\eta \rightarrow 0} \frac{1}{2i} \int_0^\infty e^{-\eta x} \left( e^{ix} - e^{-ix} \right) dx , \\
+		&= \lim_{\eta \rightarrow 0} \frac{1}{2i} \int_0^\infty \left( e^{-x(\eta - i)}  - e^{-x(\eta + i)} \right) dx . \\
+	\end{align}
+	This can be integrated easily, giving us 
+	\begin{align} 
+		I &= \lim_{\eta \rightarrow 0} \frac{1}{2i} \int_0^\infty \left( e^{-x(\eta - i)}  - e^{-x(\eta + i)} \right) dx , \\
+		&= \lim_{\eta \rightarrow 0} \frac{1}{2i} \left[ \frac{-1}{\eta - i} e^{-x(\eta - i)}  + \frac{1}{i + \eta} e^{-x(i + \eta)} \right]_0^\infty , \\
+		&= \lim_{\eta \rightarrow 0} \frac{1}{2i} \left( \frac{1}{\eta - i} - \frac{1}{i + \eta} \right) .
+	\end{align}
+	At this point, we take the limit that \(\eta \rightarrow 0\), and are left with 
+	\begin{align} 
+		I &= \frac{1}{2i} \left( \frac{1}{- i} - \frac{1}{i} \right) \\
+		&= \frac{1}{2i} \left( i - (-i) \right) = \frac{2i}{2i} \\
+		&= 1 .
+	\end{align}
+	While this may seem like a trick, this technique is very powerful when it comes to evaluating lots of different types of oscillating integrals that need to be calculated to solve physics problems.
+	For example, Fourier transforms often involve integrals of this type.
+	</p>
+
+	<h2 id="diverging">&#167 2 Diverging Integrals</h2>
+	<p>
+		As another example of this method, let's try to evaluate the explicitly divergent integral
+		\begin{equation}  
+			I = \int_0^\infty e^x dx . 
+		\end{equation}
+		It is very clear that as \(x \rightarrow \infty\), \(e^x \rightarrow \infty\).  
+		We play the same trick as before, adding a factor that ensures that the integrand vanishes at infinity, giving us
+		\begin{align} 
+			I &= \lim_{\eta \rightarrow 0} \int_0^\infty e^x e^{-\eta x} dx \\
+			&= \lim_{\eta \rightarrow 0} \int_0^\infty e^{-x(\eta - 1)} dx \\
+			&= \lim_{\eta \rightarrow 0} \left[ \frac{-1}{\eta - 1} e^{-x(\eta - 1)} \right]_0^\infty \\
+			&= \lim_{\eta \rightarrow 0} \frac{1}{\eta - 1} \\
+			&= -1 .
+		\end{align}
+	</p>
+
+	<h2 id="casimir">&#167 3 The Casimir Effect</h2>
+	<p>
+		For an example from physics of why you might want to use this trick, we can think about the <a href="https://en.wikipedia.org/wiki/Casimir_effect">Casimir effect</a>.
+		If you have two thin metal plates and place them very close together(on the order of microns), they are attracted to each other.
+		This is because fewer electromagnetic modes are supported inside the plates than outside, so there is an inwards force as a direct consequence of zero-point energy fluctuations of the electromagnetic field.
+		When calculating the Casimir force in 1D, you need to work out the difference between a divergent sum and a divergent integral
+		\begin{equation} 
+			\Delta E \propto \sum_{\nu = 1}^\infty \nu - \int_0^\infty \nu d\nu = \frac{-1}{12}.
+		\end{equation}
+		This gives the difference in energy between the inside of the plates and the rest of the universe, which is related to the force that the plates feel.
+		It seems odd that the difference between two infinities is -1/12, however we can see how this comes about using our trick!
+		Before we dive into the working, it's worth noting that this is not how <a href="https://www.mit.edu/~kardar/research/seminars/Casimir/Casimir1948.pdf">Casimir found the difference</a> and it's not a particularly good way of doing this.
+		The proper way to work out the sum-integral difference is using the <a href="https://en.wikipedia.org/wiki/Euler–Maclaurin_formula">Euler-Maclaurin formula</a>. 
+		With that said, let's see what we can do using the trick we've been thinking about. <br>
+		Let's start with the integral
+	</p>
+	<h3>&#167 3.1 Evaluating the Integral</h3>
+	<p>
+		Just like before, we insert our decaying factor to force convergence
+		\begin{equation}  
+			I = \int_0^\infty \nu d\nu = \lim_{\eta \rightarrow 0} \int_0^\infty \nu e^{-\eta \nu} d\nu ,
+		\end{equation}
+		which can be integrated by parts to give us 
+		\begin{align}  
+			I &= \lim_{\eta \rightarrow 0} \left( \left[ -\frac{\nu e^{-\eta \nu}}{\eta} \right]_0^\infty + \frac{1}{\eta} \int_0^\infty e^{-\eta \nu} d\nu \right) \\
+			&= \lim_{\eta \rightarrow 0} \frac{1}{\eta} \int_0^\infty e^{-\eta \nu} d\nu \\
+			&= \lim_{\eta \rightarrow 0} -\frac{1}{\eta^2} \left[ e^{-\eta \nu} \right]_0^\infty \\
+			&= \lim_{\eta \rightarrow 0} -\frac{1}{\eta^2}(0 - 1) \\
+			&= \lim_{\eta \rightarrow 0} \frac{1}{\eta^2} .
+		\end{align}
+		This doesn't look very encouraging: we've still got something that will diverge when we take the limit.
+		Before we jump to any conclusions though, let's see if we can evaluate the sum.  
+		This will take some work (so skip to the answer if you're in a hurry).
+	</p>
+	<h3>&#167 3.2 Evaluating the Summation</h3>
+	<p>
+		We can use basically the same trick to force the summation to converge as we used for the integrals, but the calculation does involve quite a lot of faffing about.
+		Starting in the same way, we write the sum as 
+		\begin{equation} 
+			S = \lim_{\eta \rightarrow 0} \sum_{\nu = 1}^\infty \nu e^{-\eta \nu} .
+		\end{equation}
+		We can notice that this can also be written as 
+		\begin{align} 
+			S &= \lim_{\eta \rightarrow 0} \left( -\frac{\partial}{\partial \eta} \sum_{\nu = 1}^\infty e^{-\eta \nu} \right) , \\
+			&= \lim_{\eta \rightarrow 0} \left( -\frac{\partial}{\partial \eta} \sum_{\nu = 1}^\infty \left[ e^{-\eta} \right]^\nu \right) . 
+		\end{align}
+		Now, if we write \(\nu = p+1\) so that at \(\nu = 1\), \(p = 0\) then the summation becomes
+		\begin{equation} 
+			S = \lim_{\eta \rightarrow 0} \left( -\frac{\partial}{\partial \eta} \sum_{p = 0}^\infty e^{-\eta} \left( e^{-\eta} \right)^p \right) ,
+		\end{equation}
+		which is just the geometric series \(\sum_{n=0}^\infty x^n = 1/(1-x)\).
+		We now have 
+		\begin{equation} 
+			S = \lim_{\eta \rightarrow 0} \left( -\frac{\partial}{\partial \eta} \frac{e^{-\eta}}{(1-e^{-\eta})} \right) . 
+		\end{equation}
+		Evaluating the derivative gives 
+		\begin{equation}  
+			S = \lim_{\eta \rightarrow 0} \frac{e^{-\eta}}{(1 - e^{-\eta})^2} .
+		\end{equation}
+		We're slowly getting there!
+		Now, it's not too difficult to convince yourself that 
+		\begin{equation} 
+			\frac{1}{4 \sinh^2 (\eta /2)} = \frac{e^{-\eta}}{(1 - e^{-\eta})^2} . 
+		\end{equation}
+		Next, we Taylor expand \(\sinh (x)\) around \(x=0\), getting
+		\begin{align} 
+			\sinh (x) &\approx \sinh (0) + x \cosh (0) + \frac{x^2}{2!} \sinh (0) + + \frac{x^3}{3!} \cosh (0) \\
+			&= x + \frac{x^3}{3!} + \ldots
+		\end{align}
+		Using this, we can write the sum as 
+		\begin{align}  
+			S &= \lim_{\eta \rightarrow 0} \left[ \frac{1}{4} \left( \sinh \frac{\eta}{2} \right)^{-2} \right] \\
+			&= \lim_{\eta \rightarrow 0} \left[ \frac{1}{4} \left( \frac{\eta}{2} + \frac{\eta^3}{48} + \ldots \right)^{-2} \right] \\
+			&= \lim_{\eta \rightarrow 0} \left[ \frac{1}{\eta^2} \left( 1 + \frac{\eta^2}{24} + \ldots \right)^{-2} \right]
+		\end{align}
+		We can finally get rid of the brackets using the binomial expansion \((1+x)^\alpha \approx 1 + \alpha x\), leaving us with just
+		\begin{equation}  
+			S = \lim_{\eta \rightarrow 0} \left( \frac{1}{\eta^2} - \frac{1}{12}\right) .
+		\end{equation}
+	</p>
+	<h3>&#167 3.3 Putting everything together</h3>
+	<p>
+		We can now put together the results for the sum and the integral to find \(\Delta E = \sum_{\nu = 1}^\infty \nu - \int_0^\infty \nu d\nu\).
+		We have 
+		\begin{align}  	
+			\Delta E &= \lim_{\eta \rightarrow 0} \left[ \frac{1}{\eta^2} - \frac{1}{12} - \frac{1}{\eta^2} \right] \\
+			&= -\frac{1}{12} .
+		\end{align}
+		This number, when multiplied by some physical constants, gives the size of the Casimir force between two plates which is somethigng that <a href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.78.5">can be measured!</a>
+		We should take a minute to think about how weird this is.
+		We have an infinite sum, that diverges, and an infinite integral that also diverges and when we take their different using a suspicious looking trick we get a number that can actually be measured.
+		While peculiar, -1/12 comes up in other places, for example the <a href="https://www.youtube.com/watch?v=w-I6XTVZXww">sum of all natural numbers</a>.
+	</p>
+	
+	<h2>References/Further Reading</h2>
+
+	<ol>
+		<li>
+			"Advanced Mathematical Methods for Scientists and Engineers", C. M. Bender and S. A. Orszag <br>
+			This describes some other methods for regularising divergent summations (Abel summation, Bohrel summation etc.).
+		</li>
+		<li>
+			"Essential Quantum Optics: From Quantum Measurements to Black Holes", U. Leonhardt <br>
+			The Casimir effect is further explained here, with the Euler-Maclaurin method used to find the difference between the integral and the sum.
+		</li>
+		<li>
+			The method I've explained here is sometimes called "heat kernel regularisation".
+		</li>
+	</ol>
+	
+	</section>
+</article>
+<footer>
+	<br>
+	Copyright &#169 James Capers, 2020.  Made with <a href="https://github.com/edwardtufte/tufte-css">tufte.css</a>.
+</footer>
+
+</body>
+</html>
