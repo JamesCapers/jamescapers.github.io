@@ -1,249 +1,447 @@
-<!doctype html>
-
-<html lang="en">
-<head>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
   <meta charset="utf-8">
-  <link rel="stylesheet" type="text/css" href="../tufte.css">
-  <title>Jacobi-Anger</title>
-  <meta name="description" content="Jacobi-Anger">
+  <meta name="generator" content="quarto-0.3.37">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <meta name="author" content="James Capers">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Regularising Integrals and the Casimir Effect</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+
+  <script src="jacobi-anger_files/libs/clipboard/clipboard.min.js"></script>
+  <script src="jacobi-anger_files/libs/quarto-html/quarto.js"></script>
+  <script src="jacobi-anger_files/libs/quarto-html/popper.min.js"></script>
+  <script src="jacobi-anger_files/libs/quarto-html/tippy.umd.min.js"></script>
+  <script src="jacobi-anger_files/libs/quarto-html/anchor.min.js"></script>
+  <link href="jacobi-anger_files/libs/quarto-html/tippy.css" rel="stylesheet">
+  <link href="jacobi-anger_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+  <script src="jacobi-anger_files/libs/bootstrap/bootstrap.min.js"></script>
+  <link href="jacobi-anger_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+  <link href="jacobi-anger_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet">
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async
-          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-<article>	
+<div id="quarto-content" class="container-fluid page-layout-article">
+<div class="page-columns">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <div id="quarto-toc-target"></div>
+</div>
+<main class="content">
+<a href="../blog_index.html"> Back to blog archive </a>
+<header id="title-block-header">
+<h1 class="title display-7">Regularising Integrals and the Casimir Effect</h1>
+<p class="author">James Capers</p>
+<p class="date">11th January 2022</p>
+<div class="abstract">
+<div class="abstract-title">Abstract</div>
+I outline and play around with a trick that often gets used to regularise oscillating and divergent integrals. After a couple of simple examples, I apply this to the Casimir effect and show the the difference between an diverging series and a diverging integral is -1/12.
+</div>
+</header>
+<section id="motivation" class="level2">
+<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
+<p>When solving wave scattering problems, one often has to solve the Helmholtz equation. Written in cartesian coordinates this is <span class="math display">\[\begin{align}
+            \left( \nabla^2 + k^2 \right) \phi = 0, \\
+            \left( \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + k^2 \right) \phi = 0.
+        \end{align}\]</span> We can see straight away that a solution to this is a plane wave <span class="math inline">\(\phi (x, y) = e^{ik_x x + ik_y y}\)</span>, where <span class="math inline">\(k_x^2 + k_y^2 = k^2\)</span>. However, we may also want to solve wave problems in cylindrical coordinates, this would be a natural choice for the scattering from a cylinder. Writing the Helmholtz equation in <a href="https://en.wikipedia.org/wiki/Del_in_cylindrical_and_spherical_coordinates">cylindrical coordinates</a>, we have <span class="math display">\[\begin{equation}
+            \left( \frac{\partial^2}{\partial r^2} + \frac{1}{r} \frac{\partial}{\partial r} + \frac{1}{r^2} \frac{\partial^2}{\partial \theta^2} + k^2 \right) \phi = 0,
+        \end{equation}\]</span> where we have assumed we’re sat at a particular <span class="math inline">\(z\)</span> position so the solution has no dependance on this coordinate. We can solve the Helmholtz equation in cylindrical coordinates using the variable separation method, writing the solution as <span class="math inline">\(\phi (r, \theta) = R(r) \Theta (\theta)\)</span>. Plugging this in and rearranging a bit, we have <span class="math display">\[\begin{equation}
+            \frac{r^2}{R} \frac{\partial^2 R}{\partial r^2} + \frac{r}{R} \frac{\partial R}{\partial r} + k^2 r^2 = -\frac{1}{\Theta} \frac{\partial^2 \Theta}{\partial \theta^2} ,
+        \end{equation}\]</span> meaning that the angular part is equal to a constant that we’ll call <span class="math inline">\(n\)</span> <span class="math display">\[\begin{equation}
+        \frac{\partial^2 \Theta}{\partial \theta^2} = -n^2 \Theta.
+        \end{equation}\]</span> It’s fairly easy to see that this differential equation has the solution <span class="math display">\[\begin{equation}
+            \Theta (\theta) = e^{i n \theta} .
+        \end{equation}\]</span> Plugging this back in, we now have the differential equation for the radial part of the solution <span class="math display">\[\begin{equation}
+            r^2 \frac{\partial^2 R}{\partial r^2} + r \frac{\partial R}{\partial r} + (k^2 r^2 - n^2) R = 0 .
+        \end{equation}\]</span> We can re-write this more clearly by introducing the unitless variable <span class="math inline">\(x = kr\)</span> and replacing the <span class="math inline">\(r\)</span> derivatives with <span class="math inline">\(x\)</span> derivatives using <span class="math inline">\(dx = kdr\)</span>, which gives us <span class="math display">\[\begin{equation}
+            x^2 \frac{\partial^2 R}{\partial x^2} + x \frac{\partial R}{\partial x} + (x^2 - n^2) R = 0 .
+        \end{equation}\]</span> This may still look quite hard to solve, but it’s not!<br>
+In fact, this is just the Bessel differential equation <span class="math display">\[\begin{equation}
+            x^2 \frac{d^2y}{dx^2} + x \frac{dy}{dx} + (x^2 - \alpha^2) y = 0
+        \end{equation}\]</span> which is solved by the Bessel functions <span class="math inline">\(J_n (x) = J_n (kr)\)</span>. Plutting the angular and radial parts together gives us the full solution to the Helmholtz equation in polar coordinates as <span class="math display">\[\begin{equation}
+            \phi (r, \theta) = \sum_{n = -\infty}^\infty J_n (kr) e^{i n \theta} ,
+        \end{equation}\]</span> whick looks rather different to the plane wave solution we wrote down in cartesian coordinates. This should be slightly worrying, as <em>physics does not depend upon which coordinate system you choose</em>. Fortunately, the Jacobi-Anger expansion gives us a way of writing a plane wave in terms of Bessel functions and angular harmonics, reconciling our solutions in polar and cartesian coordinates.</p>
+</section>
+<section id="fourier-series" class="level2">
+<h2 class="anchored" data-anchor-id="fourier-series">Fourier Series</h2>
+<p>We can derive the Jacobi-Anger expansion by considering the Fourier series of a plane wave. The Fourier series of some function of is just a decomposition of that function into the angular harmonics <span class="math display">\[\begin{equation}
+            f(\theta) = \sum_{l=-\infty}^{\infty} a_n e^{in\theta} ,
+        \end{equation}\]</span> with the complex coefficients <span class="math inline">\(a_n\)</span> giving the amplitude of a particular harmonic. These coefficients are found by integrating the function against the harmonics <span class="math display">\[\begin{equation}
+            a_n = \frac{1}{2\pi} \int_{-\pi}^\pi d\theta e^{-in\theta} f(\theta) .
+        \end{equation}\]</span> Let’s apply this to our plane wave solution and see what we find. Our plane wave solution was <span class="math display">\[\begin{equation}
+            e^{ik_x x + ik_y y} = e^{i \boldsymbol{k} \cdot \boldsymbol{r}} = e^{i k r \cos \theta} = e^{i k r \sin (\theta + \pi/2)}.
+        \end{equation}\]</span> Let us write <span class="math inline">\(\phi = \theta +\pi/2\)</span> and find the Fourier series of <span class="math inline">\(e^{i k r \sin \phi}\)</span> in terms of <span class="math inline">\(\phi\)</span>. The coefficients of the expansion are <span class="math display">\[\begin{align}
+            a_n &amp;= \frac{1}{2\pi} \int_{-\pi}^\pi d\phi e^{-in\phi} e^{i k r \sin \phi} \\
+            &amp;= \frac{1}{2\pi} \int_{-\pi}^\pi d\phi e^{i ( k r \sin \phi - n \phi)} \\
+            &amp;= \frac{1}{2\pi} \int_{-\pi}^\pi d\phi \left\{ \cos \left[ k r \sin \phi - n \phi \right] + i \sin \left[ k r \sin \phi - n \phi \right] \right\}
+        \end{align}\]</span> The imaginary part is an odd function evaluated over symmetric limits so vanishes and the real part leaves us with <span class="math display">\[\begin{equation}
+            a_n = \frac{1}{2\pi} \int_{-\pi}^\pi d\phi \cos \left[ k r \sin \phi - n \phi \right]
+        \end{equation}\]</span> It doesn’t look like we’re much closer to convert a plane wave into Bessel functions, but in fact we’re done! This expression is the integral representation of the Bessel function <span class="math inline">\(J_n (kr)\)</span>. So it turns out that that coefficients in the Fourier expansion of a plane wave are the Bessel functions <span class="math display">\[\begin{equation}
+            e^{ikr \sin \phi} = \sum_{n=-\infty}^\infty J_n (kr) e^{i n \phi} .
+        \end{equation}\]</span> All we need to do now to show that our plane wave solution and our Bessel function solutions for the Helmholtz equation are the same is to substitute (= + /2), giving us <span class="math display">\[\begin{align}
+            e^{ikr \sin (\theta+\pi/2)} &amp;= \sum_{n=-\infty}^\infty J_n (kr) e^{i n (\theta + \pi/2)}  \\
+            e^{ikr \cos \theta} &amp;= \sum_{n=-\infty}^\infty J_n (kr) e^{i n\theta } e^{i n \pi/2}  \\
+            e^{ikr \cos \theta} &amp;= \sum_{n=-\infty}^\infty i^n J_n (kr) e^{i n\theta }
+        \end{align}\]</span> This is the Jacobi-Anger expansion, converting a plane wave into a sum of Bessel functions.</p>
+</section>
+<section id="the-jacobi-anger-expansion" class="level2">
+<h2 class="anchored" data-anchor-id="the-jacobi-anger-expansion">The Jacobi-Anger Expansion</h2>
+<p>In the previous section, we derived the Jacobi-Anger expansion <span class="math display">\[\begin{equation}
+            e^{iz \cos \theta} = \sum_{n=-\infty}^\infty i^n J_n (z) e^{i n\theta } ,
+        \end{equation}\]</span> and in this section all we’ll do is show that there’s another way to write it then show how it behaves under angular integration. Both of these things come in handy when solving wave scattering problems. To re-write the expansion in a slightly different way, we split the sum into parts from <span class="math inline">\(-\infty\)</span> to -1, the zero term and then from 1 to <span class="math inline">\(\infty\)</span> <span class="math display">\[\begin{equation}  
+            e^{iz \cos \theta} = \sum_{n=-\infty}^{-1} i^n J_n (z) e^{i n \theta} + J_0 (z) + \sum_{n=1}^{\infty} i^n J_n (z) e^{i n \theta} .
+        \end{equation}\]</span> In the first term we re-map the index <span class="math inline">\(n \rightarrow -n\)</span> and note that <span class="math inline">\(J_{-n} (z) = (-1)^n J_n (z)\)</span> and that <span class="math inline">\(i^{-n} (-1)^n = i^n\)</span>. This lets us write <span class="math display">\[\begin{align}
+            e^{iz \cos \theta} &amp;= \sum_{n=1}^{\infty} i^{-n} J_{-n} (z) e^{-i n \theta} + J_0 (z) + \sum_{n=1}^{\infty} i^n J_n (z) e^{i n \theta} \\
+            &amp;= \sum_{n=1}^{\infty} i^{-n} (-1)^n J_{n} (z) e^{-i n \theta} + J_0 (z) + \sum_{n=1}^{\infty} i^n J_n (z) e^{i n \theta} \\
+            &amp;= \sum_{n=1}^{\infty} i^n J_{n} (z) e^{-i n \theta} + J_0 (z) + \sum_{n=1}^{\infty} i^n J_n (z) e^{i n \theta} \\
+            &amp;= J_0 (z) + \sum_{n=1}^\infty i^n J_n (z) \left( e^{in\theta} + e^{-in\theta} \right) \\
+            &amp;= J_0 (z) + 2 \sum_{n=1}^\infty i^n J_n (z) \cos (n\theta) \\
+        \end{align}\]</span> This second form of the Jacobi-Anger expansion is equivalent to the first but can be easier to use when solving problems. Now, integrating this over angles we see that <span class="math display">\[
+    \begin{align}
+            \int_0^{2\pi} d\theta \left[ J_0 (z) + 2 \sum_{n=1}^\infty i^n J_n (z) \cos (n\theta) \right] &amp;= 2 \pi J_0 (z) + 2 \sum_{n=1}^\infty i^n J_n (z) \int_0^{2\pi} d\theta \cos (n\theta) \\
+            &amp;= 2 \pi J_0 (z)
+    \end{align}
+        \]</span> since <span class="math inline">\(\int_0^{2\pi} \cos (n\theta) d\theta\)</span> vanishes for all integer and half integer <span class="math inline">\(n\)</span>. This property comes in handy when evaluating 2D Fourier integrals.</p>
+</section>
+<section id="numerical-checks" class="level2">
+<h2 class="anchored" data-anchor-id="numerical-checks">Numerical Checks</h2>
+<p>To check that our maths has made sense, we can plot this out and see how well everything fits together. We’ll start by checking the Jacobi-Anger expansion itself <span class="math display">\[\begin{equation}
+            e^{ikr \cos \theta} = \sum_{n=-\infty}^\infty i^n J_n (kr) e^{i n\theta } .
+        \end{equation}\]</span> We can do this by noticing that <span class="math inline">\(r \cos \theta = x\)</span> and writing a couple of Python functions to compare the two sides of the equality.</p>
+<div class="cell" data-execution_count="1">
+<p></p><details>
+<summary>Code</summary><p></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.special <span class="im">as</span> sps</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.integrate <span class="im">as</span> spi</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>lm  <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>k   <span class="op">=</span> <span class="fl">2.0</span><span class="op">*</span>np.pi<span class="op">/</span>lm </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>lim <span class="op">=</span> <span class="fl">4.0</span><span class="op">*</span>lm</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>xv,yv <span class="op">=</span> lim<span class="op">*</span>np.linspace(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">500</span>), lim<span class="op">*</span>np.linspace(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">500</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>X,Y <span class="op">=</span> np.meshgrid(xv,yv)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plane_wave(x,y):</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> np.sqrt(x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> y<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.exp(<span class="ot">1j</span><span class="op">*</span>k<span class="op">*</span>x)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> expansion(x,y):</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    Nmax    <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    approx  <span class="op">=</span> np.zeros_like(x, dtype<span class="op">=</span><span class="bu">complex</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    z       <span class="op">=</span> x<span class="op">+</span><span class="ot">1j</span><span class="op">*</span>y </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    r       <span class="op">=</span> np.<span class="bu">abs</span>(z)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    theta   <span class="op">=</span> np.angle(z)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> np.arange(<span class="op">-</span>Nmax, Nmax<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        approx <span class="op">+=</span> (<span class="ot">1j</span>)<span class="op">**</span>n <span class="op">*</span> sps.jv(n, k<span class="op">*</span>r) <span class="op">*</span> np.exp(<span class="ot">1j</span><span class="op">*</span>n<span class="op">*</span>theta)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> approx</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>exact       <span class="op">=</span> plane_wave(X,Y)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>approx      <span class="op">=</span> expansion(X,Y)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>error       <span class="op">=</span> np.<span class="bu">abs</span>(exact <span class="op">-</span> approx)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>,dpi<span class="op">=</span><span class="dv">150</span>, figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">3</span>))</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>im0 <span class="op">=</span> axs[<span class="dv">0</span>].imshow(np.real(exact), origin<span class="op">=</span><span class="st">"lower"</span>, extent<span class="op">=</span>(<span class="op">-</span>lim, lim, <span class="op">-</span>lim, lim), vmin<span class="op">=-</span><span class="dv">1</span>, vmax<span class="op">=</span><span class="dv">1</span>, cmap<span class="op">=</span><span class="st">"bwr"</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>fig.colorbar(im0, ax<span class="op">=</span>axs[<span class="dv">0</span>])</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].set_title(<span class="st">"Exact Plane Wave"</span>)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>im1 <span class="op">=</span> axs[<span class="dv">1</span>].imshow(np.real(approx), origin<span class="op">=</span><span class="st">"lower"</span>, extent<span class="op">=</span>(<span class="op">-</span>lim, lim, <span class="op">-</span>lim, lim), vmin<span class="op">=-</span><span class="dv">1</span>, vmax<span class="op">=</span><span class="dv">1</span>, cmap<span class="op">=</span><span class="st">"bwr"</span>)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>fig.colorbar(im1, ax<span class="op">=</span>axs[<span class="dv">1</span>])</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>].set_title(<span class="st">"Jacobi-Anger Expansion ($</span><span class="ch">\\</span><span class="st">pm20$)"</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>im2 <span class="op">=</span> axs[<span class="dv">2</span>].imshow(error, origin<span class="op">=</span><span class="st">"lower"</span>, extent<span class="op">=</span>(<span class="op">-</span>lim, lim, <span class="op">-</span>lim, lim), cmap<span class="op">=</span><span class="st">"magma"</span>)</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>fig.colorbar(im2, ax<span class="op">=</span>axs[<span class="dv">2</span>])</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">2</span>].set_title(<span class="st">"Error"</span>)</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax <span class="kw">in</span> axs:</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"$x/</span><span class="ch">\\</span><span class="st">lambda$"</span>)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"$y/</span><span class="ch">\\</span><span class="st">lambda$"</span>)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-error" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="jacobi-anger_files/figure-html/fig-error-output-1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">Figure 1: <strong>?(caption)</strong></figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If you make <span class="math inline">\(N_{max}\)</span> smaller, then the error increases as the approximation becomes worse.</p>
+<p>Next, we’ll double check that <span class="math display">\[\begin{align}
+  \frac{1}{2 \pi} \int_0^{2\pi} d\theta e^{iz\cos\theta} &amp;= 2 \pi J_0 (z).
+\end{align}\]</span> We can do this by numerically evaluating the integral using the “quad” method from scipy.</p>
+<div class="cell" data-execution_count="2">
+<p></p><details>
+<summary>Code</summary><p></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>integrand_r     <span class="op">=</span> <span class="kw">lambda</span> theta, z: np.real( np.exp(<span class="ot">1j</span><span class="op">*</span>z<span class="op">*</span>np.cos(theta)) )</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>integrand_i     <span class="op">=</span> <span class="kw">lambda</span> theta, z: np.imag( np.exp(<span class="ot">1j</span><span class="op">*</span>z<span class="op">*</span>np.cos(theta)) )</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>bessel0         <span class="op">=</span> <span class="kw">lambda</span> z: <span class="fl">1.0</span><span class="op">/</span>(<span class="fl">2.0</span><span class="op">*</span>np.pi)<span class="op">*</span>( spi.quad(integrand_r, <span class="fl">0.0</span>, <span class="fl">2.0</span><span class="op">*</span>np.pi, args<span class="op">=</span>(z))[<span class="dv">0</span>] <span class="op">+</span> <span class="ot">1j</span><span class="op">*</span>spi.quad(integrand_i, <span class="fl">0.0</span>, <span class="fl">2.0</span><span class="op">*</span>np.pi, args<span class="op">=</span>(z))[<span class="dv">0</span>] )</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>zv <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>plt.figure(dpi<span class="op">=</span><span class="dv">150</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>plt.plot(zv, np.real( sps.jv(<span class="dv">0</span>, zv) ), <span class="st">'k-'</span>, lw<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">"Exact"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>bessel_approx <span class="op">=</span> [np.real(bessel0(z)) <span class="cf">for</span> z <span class="kw">in</span> zv]</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.plot(zv, bessel_approx, <span class="st">'r.'</span>, label<span class="op">=</span><span class="st">"Integral"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>plt.legend(fancybox<span class="op">=</span><span class="va">False</span>, edgecolor<span class="op">=</span><span class="st">"k"</span>, framealpha<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"$z$"</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>plt.xlim(zv[<span class="dv">0</span>], zv[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="op">-</span><span class="fl">0.5</span>, <span class="dv">1</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="jacobi-anger_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="oscillating-integrals" class="level2">
+<h2 class="anchored" data-anchor-id="oscillating-integrals">Oscillating Integrals</h2>
+<p>Can then integral <span class="math display">\[\begin{equation}
+    I = \int_0^\infty \sin x dx
+\end{equation}\]</span> be evaluated? Let’s see what happens if we do a convergence test.<br>
+We call the upper limit <span class="math inline">\(\alpha\)</span> and do the integral <span class="math display">\[\begin{align}
+    I &amp;= \int_0^\alpha \sin x dx \\
+    &amp;= -\left[ \cos x \right]_0^\alpha \\
+    &amp;= -\cos \alpha + \cos 0 \\
+    &amp;= 1 - \cos \alpha .
+\end{align}\]</span> Since <span class="math inline">\(\cos \alpha\)</span> oscillates between -1 and 1 as we send <span class="math inline">\(\alpha \rightarrow \infty\)</span> the integral can take values between 0 and 2. This tells us that the integral does not converge to one value for these limits. <br> However, there is a trick we can play that gets used fairly often in theoretical physics to evaluate these kinds of integrals. We can re-write the original integral as the limit <span class="math display">\[\begin{equation}
+    I = \lim_{\eta \rightarrow 0} \int_0^\infty e^{-\eta x} \sin x dx ,
+\end{equation}\]</span> where <span class="math inline">\(\eta &gt; 0\)</span>. We can see that for <span class="math inline">\(\eta = 0\)</span> exponential terms becomes 1 and we have our original integral back. The benefit of adding this extra part is that it means that the integeral converges since the decaying expoential forces the integrand to go to zero at infinity. The integral can now be evaluated by writing <span class="math inline">\(\sin x\)</span> in terms of complex exponentials<br>
+<span class="math display">\[\begin{align}
+    I &amp;= \lim_{\eta \rightarrow 0} \frac{1}{2i} \int_0^\infty e^{-\eta x} \left( e^{ix} - e^{-ix} \right) dx , \\
+    &amp;= \lim_{\eta \rightarrow 0} \frac{1}{2i} \int_0^\infty \left( e^{-x(\eta - i)}  - e^{-x(\eta + i)} \right) dx . \\
+\end{align}\]</span> This can be integrated easily, giving us <span class="math display">\[\begin{align}
+    I &amp;= \lim_{\eta \rightarrow 0} \frac{1}{2i} \int_0^\infty \left( e^{-x(\eta - i)}  - e^{-x(\eta + i)} \right) dx , \\
+    &amp;= \lim_{\eta \rightarrow 0} \frac{1}{2i} \left[ \frac{-1}{\eta - i} e^{-x(\eta - i)}  + \frac{1}{i + \eta} e^{-x(i + \eta)} \right]_0^\infty , \\
+    &amp;= \lim_{\eta \rightarrow 0} \frac{1}{2i} \left( \frac{1}{\eta - i} - \frac{1}{i + \eta} \right) .
+\end{align}\]</span> At this point, we take the limit that <span class="math inline">\(\eta \rightarrow 0\)</span>, and are left with <span class="math display">\[\begin{align}
+    I &amp;= \frac{1}{2i} \left( \frac{1}{- i} - \frac{1}{i} \right) \\
+    &amp;= \frac{1}{2i} \left( i - (-i) \right) = \frac{2i}{2i} \\
+    &amp;= 1 .
+\end{align}\]</span> While this may seem like a trick, this technique is very powerful when it comes to evaluating lots of different types of oscillating integrals that need to be calculated to solve physics problems.</p>
+</section>
+<section id="diverging-integrals" class="level2">
+<h2 class="anchored" data-anchor-id="diverging-integrals">Diverging Integrals</h2>
+<p>As another example of this method, let’s try to evaluate the explicitly divergent integral <span class="math display">\[\begin{equation}  
+    I = \int_0^\infty e^x dx .
+\end{equation}\]</span> It is very clear that as <span class="math inline">\(x \rightarrow \infty\)</span>, <span class="math inline">\(e^x \rightarrow \infty\)</span>.<br>
+We play the same trick as before, adding a factor that ensures that the integrand vanishes at infinity, giving us <span class="math display">\[\begin{align}
+    I &amp;= \lim_{\eta \rightarrow 0} \int_0^\infty e^x e^{-\eta x} dx \\
+    &amp;= \lim_{\eta \rightarrow 0} \int_0^\infty e^{-x(\eta - 1)} dx \\
+    &amp;= \lim_{\eta \rightarrow 0} \left[ \frac{-1}{\eta - 1} e^{-x(\eta - 1)} \right]_0^\infty \\
+    &amp;= \lim_{\eta \rightarrow 0} \frac{1}{\eta - 1} \\
+    &amp;= -1 .
+\end{align}\]</span></p>
+</section>
+<section id="the-casimir-effect" class="level2">
+<h2 class="anchored" data-anchor-id="the-casimir-effect">The Casimir Effect</h2>
+<p>For an example from physics of why you might want to use this trick, we can think about the <a href="https://en.wikipedia.org/wiki/Casimir_effect">Casimir effect</a>. If you have two thin metal plates and place them very close together(on the order of microns), they are attracted to each other. This is because fewer electromagnetic modes are supported inside the plates than outside, so there is an inwards force as a direct consequence of zero-point energy fluctuations of the electromagnetic field. When calculating the Casimir force in 1D, you need to work out the difference between a divergent sum and a divergent integral <span class="math display">\[\begin{equation}
+    \Delta E \propto \sum_{\nu = 1}^\infty \nu - \int_0^\infty \nu d\nu = \frac{-1}{12}.
+\end{equation}\]</span> This gives the difference in energy between the inside of the plates and the rest of the universe, which is related to the force that the plates feel. It seems odd that the difference between two infinities is -1/12, however we can see how this comes about using our trick! Before we dive into the working, it’s worth noting that this is not how <a href="https://www.mit.edu/~kardar/research/seminars/Casimir/Casimir1948.pdf">Casimir found the difference</a> and it’s not a particularly good way of doing this. The proper way to work out the sum-integral difference is using the <a href="https://en.wikipedia.org/wiki/Euler–Maclaurin_formula">Euler-Maclaurin formula</a>. With that said, let’s see what we can do using the trick we’ve been thinking about. Let’s start with the integral</p>
+<section id="evaluating-the-integral" class="level3">
+<h3 class="anchored" data-anchor-id="evaluating-the-integral">Evaluating the Integral</h3>
+<p>Just like before, we insert our decaying factor to force convergence <span class="math display">\[\begin{equation}  
+    I = \int_0^\infty \nu d\nu = \lim_{\eta \rightarrow 0} \int_0^\infty \nu e^{-\eta \nu} d\nu ,
+\end{equation}\]</span> which can be integrated by parts to give us <span class="math display">\[\begin{align}  
+    I &amp;= \lim_{\eta \rightarrow 0} \left( \left[ -\frac{\nu e^{-\eta \nu}}{\eta} \right]_0^\infty + \frac{1}{\eta} \int_0^\infty e^{-\eta \nu} d\nu \right) \\
+    &amp;= \lim_{\eta \rightarrow 0} \frac{1}{\eta} \int_0^\infty e^{-\eta \nu} d\nu \\
+    &amp;= \lim_{\eta \rightarrow 0} -\frac{1}{\eta^2} \left[ e^{-\eta \nu} \right]_0^\infty \\
+    &amp;= \lim_{\eta \rightarrow 0} -\frac{1}{\eta^2}(0 - 1) \\
+    &amp;= \lim_{\eta \rightarrow 0} \frac{1}{\eta^2} .
+\end{align}\]</span> This doesn’t look very encouraging: we’ve still got something that will diverge when we take the limit. Before we jump to any conclusions though, let’s see if we can evaluate the sum.<br>
+This will take some work (so skip to the answer if you’re in a hurry).</p>
+</section>
+<section id="evaluating-the-summation" class="level3">
+<h3 class="anchored" data-anchor-id="evaluating-the-summation">Evaluating the Summation</h3>
+<p>We can use basically the same trick to force the summation to converge as we used for the integrals, but the calculation does involve quite a lot of faffing about. Starting in the same way, we write the sum as <span class="math display">\[\begin{equation}
+    S = \lim_{\eta \rightarrow 0} \sum_{\nu = 1}^\infty \nu e^{-\eta \nu} .
+\end{equation}\]</span> We can notice that this can also be written as <span class="math display">\[\begin{align}
+    S &amp;= \lim_{\eta \rightarrow 0} \left( -\frac{\partial}{\partial \eta} \sum_{\nu = 1}^\infty e^{-\eta \nu} \right) , \\
+    &amp;= \lim_{\eta \rightarrow 0} \left( -\frac{\partial}{\partial \eta} \sum_{\nu = 1}^\infty \left[ e^{-\eta} \right]^\nu \right) .
+\end{align}\]</span> Now, if we write <span class="math inline">\(\nu = p+1\)</span> so that at <span class="math inline">\(\nu = 1\)</span>, <span class="math inline">\(p = 0\)</span> then the summation becomes <span class="math display">\[\begin{equation}
+    S = \lim_{\eta \rightarrow 0} \left( -\frac{\partial}{\partial \eta} \sum_{p = 0}^\infty e^{-\eta} \left( e^{-\eta} \right)^p \right) ,
+\end{equation}\]</span> which is just the geometric series <span class="math inline">\(\sum_{n=0}^\infty x^n = 1/(1-x)\)</span>. We now have <span class="math display">\[\begin{equation}
+    S = \lim_{\eta \rightarrow 0} \left( -\frac{\partial}{\partial \eta} \frac{e^{-\eta}}{(1-e^{-\eta})} \right) .
+\end{equation}\]</span> Evaluating the derivative gives <span class="math display">\[\begin{equation}  
+    S = \lim_{\eta \rightarrow 0} \frac{e^{-\eta}}{(1 - e^{-\eta})^2} .
+\end{equation}\]</span> We’re slowly getting there! Now, it’s not too difficult to convince yourself that <span class="math display">\[\begin{equation}
+    \frac{1}{4 \sinh^2 (\eta /2)} = \frac{e^{-\eta}}{(1 - e^{-\eta})^2} .
+\end{equation}\]</span> Next, we Taylor expand <span class="math inline">\(\sinh (x)\)</span> around <span class="math inline">\(x=0\)</span>, getting <span class="math display">\[\begin{align}
+    \sinh (x) &amp;\approx \sinh (0) + x \cosh (0) + \frac{x^2}{2!} \sinh (0) + + \frac{x^3}{3!} \cosh (0) \\
+    &amp;= x + \frac{x^3}{3!} + \ldots
+\end{align}\]</span> Using this, we can write the sum as <span class="math display">\[\begin{align}  
+    S &amp;= \lim_{\eta \rightarrow 0} \left[ \frac{1}{4} \left( \sinh \frac{\eta}{2} \right)^{-2} \right] \\
+    &amp;= \lim_{\eta \rightarrow 0} \left[ \frac{1}{4} \left( \frac{\eta}{2} + \frac{\eta^3}{48} + \ldots \right)^{-2} \right] \\
+    &amp;= \lim_{\eta \rightarrow 0} \left[ \frac{1}{\eta^2} \left( 1 + \frac{\eta^2}{24} + \ldots \right)^{-2} \right]
+\end{align}\]</span> We can finally get rid of the brackets using the binomial expansion <span class="math inline">\((1+x)^\alpha \approx 1 + \alpha x\)</span>, leaving us with just <span class="math display">\[\begin{equation}  
+    S = \lim_{\eta \rightarrow 0} \left( \frac{1}{\eta^2} - \frac{1}{12}\right) .
+\end{equation}\]</span></p>
+</section>
+<section id="putting-everything-together" class="level3">
+<h3 class="anchored" data-anchor-id="putting-everything-together">Putting Everything Together</h3>
+<p>We can now put together the results for the sum and the integral to find <span class="math inline">\(\Delta E = \sum_{\nu = 1}^\infty \nu - \int_0^\infty \nu d\nu\)</span>. We have <span class="math display">\[\begin{align}   
+    \Delta E &amp;= \lim_{\eta \rightarrow 0} \left[ \frac{1}{\eta^2} - \frac{1}{12} - \frac{1}{\eta^2} \right] \\
+    &amp;= -\frac{1}{12} .
+\end{align}\]</span> This number, when multiplied by some physical constants, gives the size of the Casimir force between two plates which is somethigng that <a href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.78.5">can be measured</a>! We should take a minute to think about how weird this is. We have an infinite sum, that diverges, and an infinite integral that also diverges and when we take their different using a suspicious looking trick we get a number that can actually be measured. While peculiar, -1/12 comes up in other places, for example the <a href="https://www.youtube.com/watch?v=w-I6XTVZXww">sum of all natural numbers</a></p>
+</section>
+</section>
+</main>
+<!-- /main column -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    setTimeout(function() {
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /grid -->
+</div> <!-- /content -->
 
-	<a href="../index.html"> Back to homepage </a>
-	<h1> The Jacobi-Anger Expansion </h1>
-	<section>
-	<hr>
-	<p>
-		The Jacobi-Anger expansion is a way to decompose a plane wave into angular harmonics and Bessel functions.
-		This decomposition is very useful when solving a wide range of wave scattering problems.
-		In this post, I'll explain why it makes sense to try and write a plane wave in terms of Bessel funcions and show how the Jacobi-Anger expansion can be derived by considering the Fourier series of a plane wave.
-		We'll conclude with some numerical checks that all of the maths makes sense.
-	</p>
-	<p>💻 <a href="./jacobi-anger/jacobi-anger.ipynb" download>Download notebook</a></p>
-	<hr>
 
-	<h2>Contents</h2>
-	<ol>
-		<li><a href="#motivation">Motivation</a></li>
-		<li><a href="#fourier_series">Fourier Series</a></li>
-		<li><a href="#ja_exp">The Jacobi-Anger Expansion</a></li>
-		<li><a href="#numerical_checks">Numerical Chekcs</a></li>
-	</ol>
-
-	<h2 id="motivation">&#167 1 Motivation</h2>
-	<p>
-		When solving wave scattering problems, one often has to solve the Helmholtz equation.
-		Written in cartesian coordinates this is
-		\begin{align}
-			\left( \nabla^2 + k^2 \right) \phi = 0, \\
-			\left( \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + k^2 \right) \phi = 0.
-		\end{align}
-		We can see straight away that a solution to this is a plane wave \( \phi (x, y) = e^{ik_x x + ik_y y} \), where \(k_x^2 + k_y^2 = k^2\).
-		However, we may also want to solve wave problems in cylindrical coordinates, this would be a natural choice for the scattering from a cylinder.
-		Writing the Helmholtz equation in <a href="https://en.wikipedia.org/wiki/Del_in_cylindrical_and_spherical_coordinates">cylindrical coordinates</a>, we have 
-		\begin{equation}
-			\left( \frac{\partial^2}{\partial r^2} + \frac{1}{r} \frac{\partial}{\partial r} + \frac{1}{r^2} \frac{\partial^2}{\partial \theta^2} + k^2 \right) \phi = 0,
-		\end{equation}
-		where we have assumed we're sat at a particular \(z\) position so the solution has no dependance on this coordinate.
-		We can solve the Helmholtz equation in cylindrical coordinates using the variable separation method (REF), writing the solution as \( \phi (r, \theta) = R(r) \Theta (\theta) \).
-		Plugging this in and rearranging a bit, we have 
-		\begin{equation} 
-			\frac{r^2}{R} \frac{\partial^2 R}{\partial r^2} + \frac{r}{R} \frac{\partial R}{\partial r} + k^2 r^2 = -\frac{1}{\Theta} \frac{\partial^2 \Theta}{\partial \theta^2} ,
-		\end{equation}
-		meaning that the angular part is equal to a constant that we'll call \(n\)
-		\begin{equation} 
-		\frac{\partial^2 \Theta}{\partial \theta^2} = -n^2 \Theta.
-		\end{equation} 
-		It's fairly easy to see that this differential equation has the solution
-		\begin{equation} 
-			\Theta (\theta) = e^{i n \theta} .
-		\end{equation}
-		Plugging this back in, we now have the differential equation for the radial part of the solution 
-		\begin{equation} 
-			r^2 \frac{\partial^2 R}{\partial r^2} + r \frac{\partial R}{\partial r} + (k^2 r^2 - n^2) R = 0 . 
-		\end{equation}
-		We can re-write this more clearly by introducing the unitless variable \(x = kr\) and replacing the \(r\) derivatives with \(x\) derivatives using \(dx = kdr\), which gives us 
-		\begin{equation} 
-			x^2 \frac{\partial^2 R}{\partial x^2} + x \frac{\partial R}{\partial x} + (x^2 - n^2) R = 0 .
-		\end{equation}
-		This may still look quite hard to solve, but it's not!  
-		In fact, this is just the Bessel differential equation
-		\begin{equation}
-			x^2 \frac{d^2y}{dx^2} + x \frac{dy}{dx} + (x^2 - \alpha^2) y = 0
-		\end{equation}
-		which is solved by the Bessel functions \(J_n (x) = J_n (kr)\). 
-		Plutting the angular and radial parts together gives us the full solution to the Helmholtz equation in polar coordinates as 
-		\begin{equation} 
-			\phi (r, \theta) = \sum_{n = -\infty}^\infty J_n (kr) e^{i n \theta} ,
-		\end{equation}
-		whick looks rather different to the plane wave solution we wrote down in cartesian coordinates.
-		This should be slightly worrying, as <i>physics does not depend upon which coordinate system you choose</i>.
-		Fortunately, the Jacobi-Anger expansion gives us a way of writing a plane wave in terms of Bessel functions and angular harmonics, reconciling our solutions in polar and cartesian coordinates.
-	</p>
-
-	<h2 id="fourier_series">&#167 2 Fourier Series</h2>
-	<p>
-		We can derive the Jacobi-Anger expansion by considering the Fourier series of a plane wave.
-		The Fourier series of some function of is just a decomposition of that function into the angular harmonics
-		\begin{equation}
-			f(\theta) = \sum_{l=-\infty}^{\infty} a_n e^{in\theta} ,
-		\end{equation}
-		with the complex coefficients \(a_n\) giving the amplitude of a particular harmonic.
-		These coefficients are found by integrating the function against the harmonics
-		\begin{equation}
-			a_n = \frac{1}{2\pi} \int_{-\pi}^\pi d\theta e^{-in\theta} f(\theta) .
-		\end{equation}
-		Let's apply this to our plane wave solution and see what we find.
-		Our plane wave solution was 
-		\begin{equation} 
-			e^{ik_x x + ik_y y} = e^{i \boldsymbol{k} \cdot \boldsymbol{r}} = e^{i k r \cos \theta} = e^{i k r \sin (\theta + \pi/2)}.
-		\end{equation}
-		Let us write \(\phi = \theta +\pi/2\) and find the Fourier series of \(e^{i k r \sin \phi}\) in terms of \(\phi\).
-		The coefficients of the expansion are
-		\begin{align} 
-			a_n &= \frac{1}{2\pi} \int_{-\pi}^\pi d\phi e^{-in\phi} e^{i k r \sin \phi} \\
-			&= \frac{1}{2\pi} \int_{-\pi}^\pi d\phi e^{i ( k r \sin \phi - n \phi)} \\
-			&= \frac{1}{2\pi} \int_{-\pi}^\pi d\phi \left\{ \cos \left[ k r \sin \phi - n \phi \right] + i \sin \left[ k r \sin \phi - n \phi \right] \right\}
-		\end{align}
-		The imaginary part is an odd function evaluated over symmetric limits so vanishes and the real part leaves us with 
-		\begin{equation} 
-			a_n = \frac{1}{2\pi} \int_{-\pi}^\pi d\phi \cos \left[ k r \sin \phi - n \phi \right]
-		\end{equation}
-		It doesn't look like we're much closer to convert a plane wave into Bessel functions, but in fact we're done!
-		This expression is the integral representation of the Bessel function \(J_n (kr)\).
-		So it turns out that that coefficients in the Fourier expansion of a plane wave are the Bessel functions 
-		\begin{equation} 
-			e^{ikr \sin \phi} = \sum_{n=-\infty}^\infty J_n (kr) e^{i n \phi} .
-		\end{equation}
-		All we need to do now to show that our plane wave solution and our Bessel function solutions for the Helmholtz equation are the same is to substitute \(\phi = \theta + \pi/2\), giving us 
-		\begin{align} 
-			e^{ikr \sin (\theta+\pi/2)} &= \sum_{n=-\infty}^\infty J_n (kr) e^{i n (\theta + \pi/2)}  \\
-			e^{ikr \cos \theta} &= \sum_{n=-\infty}^\infty J_n (kr) e^{i n\theta } e^{i n \pi/2}  \\
-			e^{ikr \cos \theta} &= \sum_{n=-\infty}^\infty i^n J_n (kr) e^{i n\theta }
-		\end{align}
-		This is the Jacobi-Anger expansion, converting a plane wave into a sum of Bessel functions.
-	</p>
-	
-	<h2 id="ja_exp">&#167 3 The Jacobi-Anger Expansion</h2>
-	<p>
-		In the previous section, we derived the Jacobi-Anger expansion
-		\begin{equation} 
-			e^{iz \cos \theta} = \sum_{n=-\infty}^\infty i^n J_n (z) e^{i n\theta } ,
-		\end{equation}
-		and in this section all we'll do is show that there's another way to write it then show how it behaves under angular integration.
-		Both of these things come in handy when solving wave scattering problems.
-		To re-write the expansion in a slightly different way, we split the sum into parts from \( -\infty \) to -1, the zero term and then from 1 to \( \infty \) 
-		\begin{equation}  
-			e^{iz \cos \theta} = \sum_{n=-\infty}^{-1} i^n J_n (z) e^{i n \theta} + J_0 (z) + \sum_{n=1}^{\infty} i^n J_n (z) e^{i n \theta} .
-		\end{equation}
-		In the first term we re-map the index \( n \rightarrow -n\) and note that \( J_{-n} (z) = (-1)^n J_n (z) \) and that \( i^{-n} (-1)^n = i^n \).
-		This lets us write
-		\begin{align} 
-			e^{iz \cos \theta} &= \sum_{n=1}^{\infty} i^{-n} J_{-n} (z) e^{-i n \theta} + J_0 (z) + \sum_{n=1}^{\infty} i^n J_n (z) e^{i n \theta} \\
-			&= \sum_{n=1}^{\infty} i^{-n} (-1)^n J_{n} (z) e^{-i n \theta} + J_0 (z) + \sum_{n=1}^{\infty} i^n J_n (z) e^{i n \theta} \\
-			&= \sum_{n=1}^{\infty} i^n J_{n} (z) e^{-i n \theta} + J_0 (z) + \sum_{n=1}^{\infty} i^n J_n (z) e^{i n \theta} \\
-			&= J_0 (z) + \sum_{n=1}^\infty i^n J_n (z) \left( e^{in\theta} + e^{-in\theta} \right) \\
-			&= J_0 (z) + 2 \sum_{n=1}^\infty i^n J_n (z) \cos (n\theta) \\
-		\end{align}
-		This second form of the Jacobi-Anger expansion is equivalent to the first but can be easier to use when solving problems.
-		Now, integrating this over angles we see that 
-		\begin{align} 
-			\int_0^{2\pi} d\theta \left[ J_0 (z) + 2 \sum_{n=1}^\infty i^n J_n (z) \cos (n\theta) \right] &= 2 \pi J_0 (z) + 2 \sum_{n=1}^\infty i^n J_n (z) \int_0^{2\pi} d\theta \cos (n\theta) \\
-			&= 2 \pi J_0 (z)
-		\end{align}
-		since \( \int_0^{2\pi} \cos (n\theta) d\theta \) vanishes for all integer and half integer \(n\).
-		This property comes in handy when evaluating 2D Fourier integrals.
-	</p>
-
-	<h2 id="numerical_checks">&#167 4 Numerical Checks</h2>
-
-	<p>
-		To check that our maths has made sense, we can plot this out and see how well everything fits together.
-		We'll start by checking the Jacobi-Anger expansion itself 
-		\begin{equation} 
-			e^{ikr \cos \theta} = \sum_{n=-\infty}^\infty i^n J_n (kr) e^{i n\theta } .
-		\end{equation}
-		We can do this by noticing that \(r \cos \theta = x\) and writing a couple of Python functions to compare the two sides of the equality
-	</p>
-	<pre><code>
-	import numpy as np 
-	import scipy.special as sps 
-
-	def plane_wave(x,y):
-		r = np.sqrt(x**2 + y**2)
-		return np.exp(1j*k*x)
-
-	def expansion(x,y):
-		Nmax    = 50
-		approx  = np.zeros_like(x, dtype=complex)
-		z       = x+1j*y 
-		r       = np.abs(z)
-		theta   = np.angle(z)
-		for n in np.arange(-Nmax, Nmax+1):
-			approx += (1j)**n * sps.jv(n, k*r) * np.exp(1j*n*theta)
-		return approx
-	</code></pre>
-	<p>
-		where <code>Nmax</code> is the limit of the sum since we can't actually go to infinity.
-		Plotting these things out, we see that everything looks good.
-		<img src="jacobi-anger/ja1.png">
-		Then, by decreasing <code>Nmax</code>, making the approximation worse we see that the error grows.
-		<img src="jacobi-anger/ja2.png">
-		Next, we'll double check that 
-		\begin{align} 
-			\frac{1}{2 \pi} \int_0^{2\pi} d\theta e^{iz\cos\theta} &= 2 \pi J_0 (z).
-		\end{align}
-		We can do this by numerically evaluating the integral using the <code>quad</code> method from scipy.
-	</p>
-	<pre><code>
-	import scipy.integrate as spi 
-
-	integrand_r     = lambda theta, z: np.real( np.exp(1j*z*np.cos(theta)) )
-	integrand_i     = lambda theta, z: np.imag( np.exp(1j*z*np.cos(theta)) )
-	bessel0         = lambda z: 1.0/(2.0*np.pi)*( spi.quad(integrand_r, 0.0, 2.0*np.pi, args=(z))[0] + 1j*spi.quad(integrand_i, 0.0, 2.0*np.pi, args=(z))[0] )
-	</code></pre>
-	<p>
-		We need to treat the real and imaginary parts separately and treat \(z\) as a parameter of the integral, making things look a bit messy.
-		The result of the integral can then be plotted against what we expect: \(J_0(z)\).
-		This is found in scipy's special library as <code>scipy.special.jv(0, z)</code>. 
-		Plotting the integral for several values of \(z\) should give us the zeroth order Bessel function.
-		<img src="jacobi-anger/ja3.png" width="60%"> <br>
-		From the plot, we can see that this equality also seems to hold up.
-		All of the code used to generate these plots can be downloaded from the link at the top of the page.
-	</p>
-
-	<h2>References/Further Reading</h2>
-
-	<ol>
-		<li>
-			<a href="https://dlmf.nist.gov/">Online library of mathemaical functions</a> <br>
-			Most of the identities in this article can be found here.
-		</li>
-		<li>
-			P. Morse and H. Feshback "Methods of Theoretical Physics" <br>
-			A lot of the maths that I've skimmed over is explained in detail here.  
-			There are sections on variable separation of the Helmholtz equation, as well as Bessel decompositions of plane waves and using these to solve problems.
-			For example, when we were solving the Helmholtz equation in polar coordinates I neglected all of the constants of integration and only gave the \(J_n (kr)\) solution for Bessel's differential equation, ignoring other solutions.
-		</li>
-		<li>
-			<a href="https://en.wikipedia.org/wiki/Del_in_cylindrical_and_spherical_coordinates">Del in cylindrical and spherical coordinates</a> <br>
-			Wikipedia reference for the laplacian in cylindrical coordinates.
-		</li>
-	</ol>
-	
-	</section>
-</article>
-<footer>
-	<br>
-	Copyright &#169 James Capers, 2020.  Made with <a href="https://github.com/edwardtufte/tufte-css">tufte.css</a>.
-</footer>
-
-</body>
-</html>
+</body></html>
